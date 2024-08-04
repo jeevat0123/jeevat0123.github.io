@@ -1,159 +1,153 @@
 'use strict';
 
+// Utility function to toggle the "active" class on an element
+const elementToggleFunc = (elem) => elem.classList.toggle("active");
 
+// Sidebar variables and functionality
+const sidebar = document.querySelector("[data-sidebar]"); // Sidebar element
+const sidebarBtn = document.querySelector("[data-sidebar-btn]"); // Button to toggle sidebar
 
-// element toggle function
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+// Add event listener to the sidebar button to toggle the sidebar visibility
+sidebarBtn.addEventListener("click", () => elementToggleFunc(sidebar));
 
+// Testimonials modal variables and functionality
+const testimonialsItems = document.querySelectorAll("[data-testimonials-item]"); // List of testimonial items
+const modalContainer = document.querySelector("[data-modal-container]"); // Modal container element
+const modalCloseBtn = document.querySelector("[data-modal-close-btn]"); // Button to close the modal
+const overlay = document.querySelector("[data-overlay]"); // Overlay element behind the modal
 
+// Modal content variables
+const modalImg = document.querySelector("[data-modal-img]"); // Image in the modal
+const modalTitle = document.querySelector("[data-modal-title]"); // Title in the modal
+const modalText = document.querySelector("[data-modal-text]"); // Text in the modal
 
-// sidebar variables
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+// Function to toggle the modal and overlay visibility
+const toggleModal = () => {
+  elementToggleFunc(modalContainer); // Toggle modal visibility
+  elementToggleFunc(overlay); // Toggle overlay visibility
+};
 
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
-
-
-
-// testimonials variables
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-
-// modal variable
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
-
-// modal toggle function
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
-
-// add click event to all modal items
-for (let i = 0; i < testimonialsItem.length; i++) {
-
-  testimonialsItem[i].addEventListener("click", function () {
-
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-
-    testimonialsModalFunc();
-
+// Add click event listener to each testimonial item
+testimonialsItems.forEach(item => {
+  item.addEventListener("click", () => {
+    // Update modal content based on the clicked testimonial
+    modalImg.src = item.querySelector("[data-testimonials-avatar]").src;
+    modalImg.alt = item.querySelector("[data-testimonials-avatar]").alt;
+    modalTitle.innerHTML = item.querySelector("[data-testimonials-title]").innerHTML;
+    modalText.innerHTML = item.querySelector("[data-testimonials-text]").innerHTML;
+    toggleModal(); // Show the modal
   });
+});
 
-}
+// Add click event listener to the modal close button and overlay to hide the modal
+modalCloseBtn.addEventListener("click", toggleModal);
+overlay.addEventListener("click", toggleModal);
 
-// add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
+// Custom select functionality variables
+const select = document.querySelector("[data-select]"); // Custom select element
+const selectItems = document.querySelectorAll("[data-select-item]"); // List of select options
+const selectValue = document.querySelector("[data-select-value]"); // Display value of the selected option
+const filterBtns = document.querySelectorAll("[data-filter-btn]"); // List of filter buttons
 
+// Add click event listener to the custom select element to toggle its visibility
+select.addEventListener("click", () => elementToggleFunc(select));
 
-
-// custom select variables
-const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
-
-select.addEventListener("click", function () { elementToggleFunc(this); });
-
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
-
+// Add click event listener to each select option
+selectItems.forEach(item => {
+  item.addEventListener("click", () => {
+    const selectedValue = item.innerText.toLowerCase(); // Get the selected option value
+    selectValue.innerText = item.innerText; // Update the displayed value
+    elementToggleFunc(select); // Hide the select options
+    filterFunc(selectedValue); // Apply the filter based on the selected value
   });
-}
+});
 
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
+// Filter functionality variables
+const filterItems = document.querySelectorAll("[data-filter-item]"); // List of filterable items
 
-const filterFunc = function (selectedValue) {
-
-  for (let i = 0; i < filterItems.length; i++) {
-
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
+// Function to filter items based on the selected value
+const filterFunc = (selectedValue) => {
+  filterItems.forEach(item => {
+    // Show or hide items based on the selected value
+    if (selectedValue === "all" || selectedValue === item.dataset.category) {
+      item.classList.add("active"); // Show item
     } else {
-      filterItems[i].classList.remove("active");
+      item.classList.remove("active"); // Hide item
+    }
+  });
+};
+
+// Track the last clicked filter button for styling
+let lastClickedBtn = filterBtns[0];
+
+// Add click event listener to each filter button
+filterBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const selectedValue = btn.innerText.toLowerCase(); // Get the selected filter value
+    selectValue.innerText = btn.innerText; // Update the displayed value
+    filterFunc(selectedValue); // Apply the filter
+    lastClickedBtn.classList.remove("active"); // Remove active class from the last clicked button
+    btn.classList.add("active"); // Add active class to the current clicked button
+    lastClickedBtn = btn; // Update the last clicked button
+  });
+});
+
+// Contact form functionality variables
+const form = document.querySelector("[data-form]"); // Contact form element
+const formInputs = document.querySelectorAll("[data-form-input]"); // List of form input fields
+const formBtn = document.querySelector("[data-form-btn]"); // Submit button of the form
+
+// Add input event listener to each form input field
+formInputs.forEach(input => {
+  input.addEventListener("input", () => {
+    formBtn.disabled = !form.checkValidity(); // Enable/disable the submit button based on form validity
+  });
+});
+
+// Page navigation functionality variables
+const navigationLinks = document.querySelectorAll("[data-nav-link]"); // List of navigation links
+const pages = document.querySelectorAll("[data-page]"); // List of page sections
+
+// Add click event listener to each navigation link
+navigationLinks.forEach((link, index) => {
+  link.addEventListener("click", () => {
+    // Remove 'active' class from all navigation links
+    navigationLinks.forEach(navLink => navLink.classList.remove("active"));
+
+    // Remove 'active' class from all pages
+    pages.forEach(page => page.classList.remove("active"));
+
+    // Add 'active' class to the clicked link
+    link.classList.add("active");
+
+    // Show the corresponding page
+    const pageToShow = Array.from(pages).find(page => page.dataset.page === link.innerHTML.toLowerCase());
+    if (pageToShow) {
+      pageToShow.classList.add("active");
     }
 
-  }
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  });
+});
 
+'use strict';
+
+// Function to toggle dark mode
+const toggleDarkMode = () => {
+  const currentTheme = document.body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+};
+
+// Check for saved theme in localStorage and apply it
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.body.setAttribute('data-theme', savedTheme);
 }
 
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-for (let i = 0; i < filterBtn.length; i++) {
-
-  filterBtn[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-
-  });
-
-}
-
-
-
-// contact form variables
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-
-  });
-}
-
-
-
-// page navigation variables
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
-    }
-
-  });
+// Add event listener to the dark mode toggle button
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+if (darkModeToggle) {
+  darkModeToggle.addEventListener('click', toggleDarkMode);
 }
