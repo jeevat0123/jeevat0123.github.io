@@ -2159,8 +2159,8 @@ textarea.form-input::-webkit-resizer {
   position: absolute;
   top: 0;
   left: 0%;
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background: var(--border-gradient-onyx);
   border-radius: 50%;
   display: flex;
