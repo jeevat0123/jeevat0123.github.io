@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 // Utility function to toggle the "active" class on an element
 const elementToggleFunc = (elem) => elem.classList.toggle("active");
@@ -151,3 +151,4 @@ const darkModeToggle = document.getElementById('dark-mode-toggle');
 if (darkModeToggle) {
   darkModeToggle.addEventListener('click', toggleDarkMode);
 }
+
