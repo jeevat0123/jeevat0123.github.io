@@ -56,7 +56,17 @@
   --light-gray-70: hsla(0, 0%, 84%, 0.7);
   --bittersweet-shimmer: hsl(0, 43%, 51%);
   --background-dark: hsla(240, 1%, 17%, 0.75);
-
+  --gradient-dark: linear-gradient(45deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet,
+      red);
+  --background-gradient: var(--gradient-dark);
+  --background-size: 600% 600%;
   /**
    * typography
    */
@@ -2184,7 +2194,10 @@ textarea.form-input::-webkit-resizer {
   --ionicon-stroke-width: 30px
 }
 
-
+[data-theme="light"] .mapbox iframe {
+  filter: none;
+  /* Ensures no grayscale or inversion effects in light theme */
+}
 
 /* White mode styles */
 [data-theme="light"] {
@@ -2266,4 +2279,14 @@ textarea.form-input::-webkit-resizer {
 
   --transition-1: 0.25s ease;
   --transition-2: 0.5s ease-in-out;
+}
+
+.message {
+  background-color: var(--smoky-black);
+  color: var(--vegas-gold);
+  border-radius: 20%;
+  padding: 5%;
+  position: absolute;
+  right: 0;
+  border: var(--smoky-black);
 }
