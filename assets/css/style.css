@@ -3,6 +3,7 @@
 \*-----------------------------------*/
 
 
+
 /*-----------------------------------*\
   #CUSTOM PROPERTY
 \*-----------------------------------*/
@@ -2271,14 +2272,4 @@ textarea.form-input::-webkit-resizer {
 
   --transition-1: 0.25s ease;
   --transition-2: 0.5s ease-in-out;
-}
-
-.message {
-  background-color: var(--smoky-black);
-  color: var(--vegas-gold);
-  border-radius: 20%;
-  padding: 5%;
-  position: absolute;
-  right: 0;
-  border: var(--smoky-black);
 }
