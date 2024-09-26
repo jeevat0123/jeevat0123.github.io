@@ -48,16 +48,19 @@
     li {
         margin-bottom: 10px;
     }
+    .sticker {
+            position: fixed;
+            opacity: 0.3; /* Adjust opacity to make it look more like a sticker */
+            z-index: -1; /* Ensures the stickers are behind other content */
+        }
 </style>
 </head>
 
 <body>
-
   <main>
-
     <!-- #SIDEBAR -->
     <aside class="sidebar" data-sidebar>
-
+      
       <div id="header-search-bar" hx-get="components/left/nav.html" hx-trigger="load"></div>
     </aside>
     <!-- # main-content -->
@@ -65,6 +68,9 @@
       <div id="header-search-bar" hx-get="components/right/main.html" hx-trigger="load"></div>
     </div>
   </main>
+    <!-- sticker -->
+    <div id="header-search-bar" hx-get="components/sticker.html" hx-trigger="load"></div>
+    <!-- sticker -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="https://unpkg.com/htmx.org"></script>

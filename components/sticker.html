@@ -1,0 +1,43 @@
+<script>
+    function getRandomPosition(maxWidth, maxHeight) {
+        const x = Math.random() * maxWidth;
+        const y = Math.random() * maxHeight;
+        return { x, y };
+    }
+    
+    function getRandomSize(minSize, maxSize) {
+        const size = minSize + Math.random() * (maxSize - minSize);
+        return size;
+    }
+    
+    function placeStickersRandomly() {
+        const stickers = document.querySelectorAll('.sticker');
+        const maxWidth = window.innerWidth - 100;  // Adjust for image width
+        const maxHeight = window.innerHeight - 100; // Adjust for image height
+        
+        stickers.forEach(sticker => {
+            // Get random position
+            const { x, y } = getRandomPosition(maxWidth, maxHeight);
+            sticker.style.left = `${x}px`;
+            sticker.style.top = `${y}px`;
+            
+            // Get random size between 50px and 150px
+            const randomSize = getRandomSize(50, 150);
+            sticker.style.width = `${randomSize}px`;
+            sticker.style.height = `${randomSize}px`; // Adjust height to match width for a square image
+        });
+    }
+    
+    // Initial placement
+    placeStickersRandomly();
+    
+    // Reposition stickers on window resize
+    window.addEventListener('resize', placeStickersRandomly);
+</script>
+<div id="container">
+    <img class="sticker" src="assets/images/avatar/python.png" alt="python">
+    <img class="sticker" src="assets/images/avatar/raspi.png" alt="python">
+    <img class="sticker" src="assets/images/avatar/nodejs.png" alt="python">
+    <img class="sticker" src="assets/images/avatar/vscode.png" alt="python">
+    <img class="sticker" src="assets/images/avatar/bash.png" alt="python">
+</div>
